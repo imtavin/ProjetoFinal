@@ -1,5 +1,7 @@
 package br.edu.up.CinemaManager.models;
 
+import br.edu.up.CinemaManager.utils.IdUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class Sessao {
         this.horario = horario;
         this.tipoDublado = tipoDublado;
         this.tipo3D = tipo3D;
-        //this.idSessao = (LastId.getLastIdSessao()) + 1;
+        this.idSessao = IdUtils.newIdSessao();
         this.sala = sala;
         this.assentosDisponiveis = new ArrayList<>();
         for (int i = 0; i < 6; i++) {

@@ -1,5 +1,7 @@
 package br.edu.up.CinemaManager.models;
 
+import br.edu.up.CinemaManager.utils.IdUtils;
+
 public class Filme {
     private Integer idFilme;
     private String titulo;
@@ -16,6 +18,7 @@ public class Filme {
     }
 
     public Filme(String titulo, String autor, String genero, Integer idadeIndicativa) {
+        this.idFilme = IdUtils.newIdFilme();
         this.titulo = titulo;
         this.autor = autor;
         this.genero = genero;
