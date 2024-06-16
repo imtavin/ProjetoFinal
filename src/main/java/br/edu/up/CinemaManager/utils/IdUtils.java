@@ -9,14 +9,6 @@ public class IdUtils {
     private static Integer idSessao = 0;
     private static Integer idFilme = 0;
 
-    public static void setIdSessao(Integer id) {
-        idSessao = id;
-    }
-
-    public static void setIdFilme(Integer id) {
-        idFilme = id;
-    }
-
     public static Integer newIdSessao(){
         idSessao = idSessao + 1;
         return idSessao;
@@ -27,4 +19,19 @@ public class IdUtils {
         return idFilme;
     }
 
+    public static Integer getIdSessao() {
+        return idSessao;
+    }
+
+    public static void setIdSessao(Integer idSessao) {
+        IdUtils.idSessao = idSessao;
+    }
+
+    public static Integer getIdFilme() {
+        return idFilme;
+    }
+
+    public static void setIdFilme(Integer idFilme) {
+        IdUtils.idFilme = idFilme;
+    }
 }
