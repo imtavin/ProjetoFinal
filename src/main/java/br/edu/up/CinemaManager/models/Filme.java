@@ -56,4 +56,11 @@ public class Filme {
     public void setIdadeIndicativa(Integer idadeIndicativa) {
         this.idadeIndicativa = idadeIndicativa;
     }
+
+    @Override
+    public String toString() {
+        return idFilme + " , " + titulo + " , "
+                + autor + " , " + genero + " , " +
+                idadeIndicativa;
+    }
 }

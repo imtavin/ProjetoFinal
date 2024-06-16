@@ -3,20 +3,18 @@ package br.edu.up.CinemaManager.daos;
 import br.edu.up.CinemaManager.models.Filme;
 import br.edu.up.CinemaManager.models.Sessao;
 import br.edu.up.CinemaManager.utils.IdUtils;
+import br.edu.up.CinemaManager.utils.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SessaoDao {
     private static final Logger logger = LogManager.getLogger(SessaoDao.class);
 
-    private static final List<Sessao> sessoes = new ArrayList<>();
+    private static List<Sessao> sessoes = new ArrayList<>();
     static File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
 
     public static Sessao carregarSessao() {
@@ -55,6 +53,20 @@ public class SessaoDao {
             logger.error("Ocorreu um errou ao carregar as sessões.", e);
         }
         return null;
+    }
+
+    public static void salvarSessao(List<Sessao> sessoes) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqSessoes))) {
+            for (Sessao sessao : sessoes) {
+                bw.write(sessao.getIdSessao() + ", " + sessao.getFilme().getTitulo() + ", "
+                        + sessao.getHorario() + ", " + sessao.getTipo3D() + ", "
+                        + sessao.getTipoDublado() + ", " + sessao.getSala() + ", " + Util.contatenaAssentos(sessao.getAssentosDisponiveis()));
+                bw.newLine();
+            }
+            bw.close();
+        }catch (IOException e) {
+            logger.error("Ocorreu um errou ao salvar as sessões.", e);
+        }
     }
 }
 
