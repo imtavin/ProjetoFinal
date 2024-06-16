@@ -12,11 +12,11 @@ public class FilmeView {
     public static void menuFilme() {
         Integer opcaoFilme = 1;
         while (opcaoFilme != 5) {
-            System.out.println("//////////////SESSÕES//////////////");
-            System.out.println("1-Adicionar Sessão");
-            System.out.println("2-Remover Sessão");
-            System.out.println("3-Pesquisar Sessão");
-            System.out.println("4-Listar Sessões");
+            System.out.println("//////////////FILMES//////////////");
+            System.out.println("1-Adicionar Filme");
+            System.out.println("2-Remover Filme");
+            System.out.println("3-Pesquisar Filme");
+            System.out.println("4-Listar Filme");
             System.out.println("5-Voltar");
             opcaoFilme = scannerFilme.nextInt();
             switch (opcaoFilme) {
