@@ -31,13 +31,14 @@ public class FilmeDao {
         }catch(IOException e){
             logger.error("Ocorreu um erro ao carregar os filmes.", e);
         }
-        return null;
+        return filmes;
     }
 
-    public static void SalvarFilme(List<Filme> filmes) {
+    public static void salvarFilme(List<Filme> filmes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes))){
             for (Filme filme : filmes) {
                 bw.write(filme.toString());
+                bw.newLine();
             }
             bw.close();
         }catch (IOException e){

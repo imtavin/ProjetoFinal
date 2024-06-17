@@ -25,6 +25,10 @@ public class Filme {
         this.idadeIndicativa = idadeIndicativa;
     }
 
+    public int getId() {
+        return idFilme;
+    }
+
         public String getTitulo() {
         return titulo;
     }
