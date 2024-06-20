@@ -21,17 +21,36 @@ public class ClienteView {
             opcaoCliente = scannerCliente.nextInt();
             switch (opcaoCliente) {
                 case 1:
+                    adicionarCliente();
                     break;
                 case 2:
+                    removerCliente();
                     break;
                 case 3:
+                    pesquisarCliente();
                     break;
                 case 4:
+                    listarCliente();
+                    break;
+                case 5:
                     break;
                 default:
+                    System.out.println("Opção Inválida! Tente novamente. ");
                     break;
             }
         }
+    }
+    public static void adicionarCliente(){
+        //teste
+    }
+    public static void removerCliente(){
+        //teste
+    }
+    public static void pesquisarCliente(){
+
+    }
+    public static void listarCliente(){
+
     }
 }
 

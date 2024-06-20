@@ -21,15 +21,29 @@ public class TransacaoView {
             opcaoTransacao = scannerTransacao.nextInt();
             switch(opcaoTransacao){
                 case 1:
+                    venderIngresso();
                     break;
                 case 2:
+                    valorArrecadado();
                     break;
                 case 3:
+                    listarTransacoes();
+                    break;
+                case 4:
                     break;
                 default:
-                    break;
+                    System.out.println("Opção Inválida! Tente Novamente. ");
             }
         }
+
+    }
+    public static void venderIngresso(){
+        
+    }
+    public static void valorArrecadado(){
+
+    }
+    public static void listarTransacoes(){
 
     }
 

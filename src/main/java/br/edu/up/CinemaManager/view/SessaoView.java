@@ -22,17 +22,35 @@ public class SessaoView {
             opcaoSessao = scannerSessao.nextInt();
             switch(opcaoSessao){
                 case 1:
+                    adicionarSessao();
                     break;
                 case 2:
+                    removerSessao();
                     break;
                 case 3:
+                    pesquisarSessao();
                     break;
                 case 4:
+                    listarSessao();
+                    break;
+                case 5:
                     break;
                 default:
-                    break;
+                    System.out.println("Opção Inválida! Tente Novamente. ");
             }
         }
+
+    }
+    public static void adicionarSessao(){
+        
+    }
+    public static void removerSessao(){
+
+    }
+    public static void pesquisarSessao(){
+
+    }
+    public static void listarSessao(){
 
     }
 
