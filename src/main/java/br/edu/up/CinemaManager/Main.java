@@ -36,9 +36,11 @@ public class Main {
                   break;
                 case 3:
                 //Vendas
+                    TransacaoView.menuTransacao();
                   break;
                 case 4:
                 //Clientes
+                    ClienteView.menuCliente();
                   break;
                 default:
                   break;
