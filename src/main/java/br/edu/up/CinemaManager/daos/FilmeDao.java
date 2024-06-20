@@ -1,6 +1,7 @@
 package br.edu.up.CinemaManager.daos;
 
 import br.edu.up.CinemaManager.models.Filme;
+import br.edu.up.CinemaManager.utils.IdUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +27,10 @@ public class FilmeDao {
                 Integer idadeIdicativa = Integer.valueOf(dados[4].trim());
                 Filme filme = new Filme(idFilme, titulo, autor, genero, idadeIdicativa);
                 filmes.add(filme);
+
+                if (idFilme > IdUtils.getIdFilme()) {
+                    IdUtils.setIdFilme(idFilme);
+                }
             }
             br.close();
         }catch(IOException e){
@@ -34,7 +39,7 @@ public class FilmeDao {
         return filmes;
     }
 
-    public static void salvarFilme(List<Filme> filmes) {
+    public static void salvarFilmes(List<Filme> filmes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes))){
             for (Filme filme : filmes) {
                 bw.write(filme.toString());

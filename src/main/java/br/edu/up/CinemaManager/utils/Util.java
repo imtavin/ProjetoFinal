@@ -1,6 +1,7 @@
 package br.edu.up.CinemaManager.utils;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Util {
 
@@ -14,5 +15,10 @@ public class Util {
             }
         }
         return assentosStr.toString();
+    }
+
+    public static void consumirQuebraDeLinha(){
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 }

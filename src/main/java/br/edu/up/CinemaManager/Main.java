@@ -31,8 +31,6 @@ public class Main {
                 case 2:
                 //Sessões
                     SessaoView.menuSessao();
-
-
                   break;
                 case 3:
                 //Vendas

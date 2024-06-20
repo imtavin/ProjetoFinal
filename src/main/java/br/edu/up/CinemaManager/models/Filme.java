@@ -5,22 +5,22 @@ import br.edu.up.CinemaManager.utils.IdUtils;
 public class Filme {
     private Integer idFilme;
     private String titulo;
-    private String autor;
+    private String diretor;
     private String genero;
     private Integer idadeIndicativa;
 
-    public Filme(int idFilme, String titulo, String autor, String genero, Integer idadeIndicativa) {
+    public Filme(int idFilme, String titulo, String diretor, String genero, Integer idadeIndicativa) {
         this.idFilme = idFilme;
         this.titulo = titulo;
-        this.autor = autor;
+        this.diretor = diretor;
         this.genero = genero;
         this.idadeIndicativa = idadeIndicativa;
     }
 
-    public Filme(String titulo, String autor, String genero, Integer idadeIndicativa) {
+    public Filme(String titulo, String diretor, String genero, Integer idadeIndicativa) {
         this.idFilme = IdUtils.newIdFilme();
         this.titulo = titulo;
-        this.autor = autor;
+        this.diretor = diretor;
         this.genero = genero;
         this.idadeIndicativa = idadeIndicativa;
     }
@@ -37,12 +37,12 @@ public class Filme {
         this.titulo = titulo;
     }
 
-    public String getAutor() {
-        return autor;
+    public String getDiretor() {
+        return diretor;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public void setDiretor(String diretor) {
+        this.diretor = diretor;
     }
 
     public String getGenero() {
@@ -64,7 +64,7 @@ public class Filme {
     @Override
     public String toString() {
         return idFilme + " , " + titulo + " , "
-                + autor + " , " + genero + " , " +
+                + diretor + " , " + genero + " , " +
                 idadeIndicativa;
     }
 }

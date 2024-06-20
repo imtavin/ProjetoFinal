@@ -2,42 +2,67 @@ package br.edu.up.CinemaManager.controllers;
 
 import br.edu.up.CinemaManager.daos.FilmeDao;
 import br.edu.up.CinemaManager.models.Filme;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class FilmeController extends AbstractCRUD<Filme> {
-    private List<Filme> filmes;
+    private static final Logger logger = LogManager.getLogger(FilmeController.class);
 
     public FilmeController() {
-        filmes = FilmeDao.carregarFilmes();
+        items = FilmeDao.carregarFilmes(); // Carrega filmes do arquivo na inicialização
+        logger.info("Filmes carregados do arquivo.");
     }
 
-    @Override
-    protected int getId(Filme filme) {
-        return filme.getId();
-    }
-
-    @Override
-    public void create(Filme filme) {
-        super.create(filme);
-        FilmeDao.salvarFilme(filmes);
-    }
-
-    @Override
-    public boolean update(int id, Filme newFilme) {
-        boolean updated = super.update(id, newFilme);
-        if (updated) {
-            FilmeDao.salvarFilme(filmes);
+    public void adicionarFilme(Filme filme) {
+        for (Filme i : items) {
+            if (i.getTitulo().equals(filme.getTitulo())) {
+                logger.warn("Tentativa de adicionar um filme já existente: " + filme.getTitulo());
+                return;
+            }
         }
-        return updated;
+        create(filme);
+        FilmeDao.salvarFilmes(items); // Salva a lista atualizada de filmes
+        logger.info("Filme adicionado: " + filme.getTitulo());
     }
 
-    @Override
-    public boolean delete(int id) {
-        boolean deleted = super.delete(id);
-        if (deleted) {
-            FilmeDao.salvarFilme(filmes);
+    public void deletarFilme(Integer id) {
+        Filme filme = buscarFilmeId(id);
+        if (filme != null) {
+            delete(filme);
+            FilmeDao.salvarFilmes(items); // Salva a lista atualizada de filmes
+            logger.info("Filme removido: " + filme.getTitulo() + ", ID" + filme.getId());
+        } else {
+            logger.warn("Tentativa de remover um filme não encontrado: " + filme.getTitulo() + ", ID: " + filme.getId());
         }
-        return deleted;
+    }
+
+    public Filme buscarFilmeTitulo(String titulo) {
+        for (Filme i : items) {
+            if (i.getTitulo().equals(titulo)) {
+                return i;
+            }
+        }
+        logger.warn("Filme não encontrado: " + titulo);
+        return null;
+    }
+
+    public Filme buscarFilmeId(Integer id) {
+        for (Filme i : items) {
+            if (i.getId() == id) {
+                return i;
+            }
+        }
+        logger.warn("Filme não encontrado: " + id);
+        return null;
+    }
+
+    public List<Filme> listarFilmesOrdenadosPorTitulo() {
+        List<Filme> filmesOrdenados = new ArrayList<>(items);
+        filmesOrdenados.sort(Comparator.comparing(Filme::getTitulo));
+        return filmesOrdenados;
     }
 }

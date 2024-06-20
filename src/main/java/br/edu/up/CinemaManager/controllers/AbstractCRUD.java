@@ -2,47 +2,34 @@ package br.edu.up.CinemaManager.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class AbstractCRUD<T> {
-    protected List<T> lista;
-
-    public AbstractCRUD() {
-        this.lista = new ArrayList<>();
-    }
+    protected List<T> items = new ArrayList<>();
 
     public void create(T item) {
-        lista.add(item);
+        items.add(item);
     }
 
-    public List<T> readAll() {
-        return lista;
+    public void delete(T item) {
+        items.remove(item);
     }
 
-    public Optional<T> readById(int id) {
-        return lista.stream()
-                .filter(item -> getId(item) == id)
-                .findFirst();
-    }
-
-    public boolean update(int id, T newItem) {
-        Optional<T> optionalItem = readById(id);
-        if (optionalItem.isPresent()) {
-            int index = lista.indexOf(optionalItem.get());
-            lista.set(index, newItem);
-            return true;
+    public T find(T item) {
+        int index = items.indexOf(item);
+        if (index != -1) {
+            return items.get(index);
         }
-        return false;
+        return null;
     }
 
-    public boolean delete(int id) {
-        Optional<T> optionalItem = readById(id);
-        if (optionalItem.isPresent()) {
-            lista.remove(optionalItem.get());
-            return true;
+    public List<T> findAll() {
+        return new ArrayList<>(items);
+    }
+
+    public void update(T oldItem, T newItem) {
+        int index = items.indexOf(oldItem);
+        if (index != -1) {
+            items.set(index, newItem);
         }
-        return false;
     }
-
-    protected abstract int getId(T item);
 }

@@ -5,6 +5,7 @@ import br.edu.up.CinemaManager.models.Filme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class FilmeView {
@@ -30,10 +31,16 @@ public class FilmeView {
                     removerFilme();
                     break;
                 case 3:
+                    pesquisarFilme();
                     break;
                 case 4:
+                    listarFilmes();
+                    break;
+                case 5:
+                    System.out.println("Voltando ao menu principal...");
                     break;
                 default:
+                    System.out.println("Opção inválida! Tente novamente.");
                     break;
             }
         }
@@ -42,22 +49,47 @@ public class FilmeView {
     public static void adicionarFilme() {
         System.out.println("Informe o título do filme:");
         String titulo = scannerFilme.nextLine(); // Consumir quebra de linha pendente
-        titulo = scannerFilme.nextLine(); // Ler o título corretamente
+        titulo = scannerFilme.nextLine();
         System.out.println("Informe o gênero do filme:");
-        String genero = scannerFilme.next();
+        String genero = scannerFilme.nextLine();
         System.out.println("Informe o diretor do filme:");
-        String diretor = scannerFilme.nextLine(); // Consumir quebra de linha pendente
-        diretor = scannerFilme.nextLine(); // Ler o título corretamente
+        String diretor = scannerFilme.nextLine();
         System.out.println("Informe a idade indicativa do filme:");
-        Integer idade = scannerFilme.nextInt();
-        Filme filme = new Filme(titulo, genero, diretor, idade);
-        filmeController.create(filme);
+        int idade = scannerFilme.nextInt();
+        scannerFilme.nextLine(); // Consumir a quebra de linha
+
+        Filme filme = new Filme(titulo, diretor, genero, idade);
+        filmeController.adicionarFilme(filme);
     }
 
     public static void removerFilme() {
-        System.out.println("Informe o título do filme a ser removido:");
-        String tituloRemover = scannerFilme.nextLine();// Consumir quebra de linha pendente
-        tituloRemover = scannerFilme.nextLine();
-        Filme filmeRemover = buscarFilme(tituloRemover);
+        listarFilmes();
+        System.out.println("Informe o ID do filme a ser removido:");
+        Integer IdRemover = scannerFilme.nextInt(); // Consumir quebra de linha pendente
+        filmeController.deletarFilme(IdRemover);
+    }
+
+    public static void pesquisarFilme() {
+        System.out.println("Informe o título do filme a ser pesquisado:");
+        String tituloPesquisar = scannerFilme.nextLine(); // Consumir quebra de linha pendente
+        tituloPesquisar = scannerFilme.nextLine();
+        Filme filme = filmeController.buscarFilmeTitulo(tituloPesquisar);
+        if (filme != null) {
+            System.out.println("Filme encontrado:");
+            System.out.println("ID: " + filme.getId());
+            System.out.println("Título: " + filme.getTitulo());
+            System.out.println("Gênero: " + filme.getGenero());
+            System.out.println("Diretor: " + filme.getDiretor());
+            System.out.println("Idade Indicativa: " + filme.getIdadeIndicativa());
+        } else {
+            System.out.println("Filme não encontrado.");
+        }
+    }
+
+    public static void listarFilmes() {
+        List<Filme> listaFilmesOrdenados = filmeController.listarFilmesOrdenadosPorTitulo();
+        for (Filme i : listaFilmesOrdenados){
+            System.out.println("Titulo: " + i.getTitulo() + "\n    ID: " + i.getId());
+        }
     }
 }
