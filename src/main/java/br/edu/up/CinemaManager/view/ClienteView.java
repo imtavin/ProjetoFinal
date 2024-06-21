@@ -1,13 +1,18 @@
 package br.edu.up.CinemaManager.view;
 
+import br.edu.up.CinemaManager.controllers.ClienteController;
+import br.edu.up.CinemaManager.models.Cliente;
+import br.edu.up.CinemaManager.models.Filme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ClienteView {
     private static final Logger logger = LogManager.getLogger(ClienteView.class);
     static Scanner scannerCliente = new Scanner(System.in);
+    private static ClienteController clienteController = new ClienteController();
 
     public static void menuCliente() {
         Integer opcaoCliente = 1;
@@ -41,16 +46,39 @@ public class ClienteView {
         }
     }
     public static void adicionarCliente(){
-        //teste
+        System.out.println("Informe o nome do cliente:");
+        String nomeCliente = scannerCliente.nextLine();
+        nomeCliente = scannerCliente.nextLine();
+        System.out.println("Informe o CPF do cliente:");
+        String cpfCliente = scannerCliente.next();
+        System.out.println("Informe a idade do cliente:");
+        int idadeCliente = scannerCliente.nextInt();
+        clienteController.adicionarCliente(new Cliente(nomeCliente, cpfCliente, idadeCliente));
     }
+
     public static void removerCliente(){
-        //teste
+        System.out.println("Informe o CPF do cliente a ser removido:");
+        String cpfClienteRemover = scannerCliente.next();
+        clienteController.removerCliente(cpfClienteRemover);
     }
+
     public static void pesquisarCliente(){
-
+        System.out.println("Informe o CPF do cliente a ser pesquisado:");
+        String cpfClientePesquisar = scannerCliente.next();
+        Cliente cliente = clienteController.buscarCliente(cpfClientePesquisar);
+        if(cliente == null){
+            System.out.println("Cliente não encntrado");
+        }
+        else{
+            System.out.println("Cliente: " + cliente.toString());
+        }
     }
-    public static void listarCliente(){
 
+    public static void listarCliente(){
+        List<Cliente> listaClienteOrdenados = clienteController.listarClientes();
+        for (Cliente i : listaClienteOrdenados){
+            System.out.println(i.toString());
+        }
     }
 }
 

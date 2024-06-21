@@ -15,7 +15,7 @@ public class SessaoDao {
     private static final Logger logger = LogManager.getLogger(SessaoDao.class);
 
     private static List<Sessao> sessoes = new ArrayList<>();
-    static File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
+    private static final File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
 
     public static List<Sessao> carregarSessoes() {
         try (BufferedReader br = new BufferedReader(new FileReader(arqSessoes))) {

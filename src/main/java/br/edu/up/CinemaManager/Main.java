@@ -25,7 +25,7 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                //filmes
+                //Filmes
                     FilmeView.menuFilme();
                   break;
                 case 2:

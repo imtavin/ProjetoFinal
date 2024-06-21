@@ -13,7 +13,7 @@ public class FilmeDao {
     private static final Logger logger = LogManager.getLogger(FilmeDao.class);
 
     private static List<Filme> filmes = new ArrayList<Filme>();
-    static File arqFilmes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaFilmes.txt");
+    private static final File arqFilmes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaFilmes.txt");
 
     public static List<Filme> carregarFilmes() {
         try (BufferedReader br = new BufferedReader(new FileReader(arqFilmes))){
