@@ -13,7 +13,7 @@ public class FilmeController extends AbstractCRUD<Filme> {
     private static final Logger logger = LogManager.getLogger(FilmeController.class);
 
     public FilmeController() {
-        items = FilmeDao.carregarFilmes(); // Carrega filmes do arquivo na inicialização
+        items = FilmeDao.carregar(); // Carrega filmes do arquivo na inicialização
         logger.info("Filmes carregados do arquivo.");
     }
 
@@ -25,7 +25,7 @@ public class FilmeController extends AbstractCRUD<Filme> {
             }
         }
         create(filme);
-        FilmeDao.salvarFilmes(items); // Salva a lista atualizada de filmes
+        FilmeDao.salvar(items); // Salva a lista atualizada de filmes
         logger.info("Filme adicionado: " + filme.getTitulo());
     }
 
@@ -33,7 +33,7 @@ public class FilmeController extends AbstractCRUD<Filme> {
         Filme filme = buscarFilmeId(id);
         if (filme != null) {
             delete(filme);
-            FilmeDao.salvarFilmes(items); // Salva a lista atualizada de filmes
+            FilmeDao.salvar(items); // Salva a lista atualizada de filmes
             logger.info("Filme removido: " + filme.getTitulo() + ", ID" + filme.getId());
         } else {
             logger.warn("Tentativa de remover um filme não encontrado: " + filme.getTitulo() + ", ID: " + filme.getId());

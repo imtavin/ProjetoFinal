@@ -11,13 +11,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessaoDao {
+public class SessaoDao implements GenericDao<Sessao>{
     private static final Logger logger = LogManager.getLogger(SessaoDao.class);
 
     private static List<Sessao> sessoes = new ArrayList<>();
     private static final File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
 
-    public static List<Sessao> carregarSessoes() {
+    public static List<Sessao> carregar() {
         try (BufferedReader br = new BufferedReader(new FileReader(arqSessoes))) {
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -55,7 +55,7 @@ public class SessaoDao {
         return null;
     }
 
-    public static void salvarSessoes(List<Sessao> sessoes) {
+    public static void salvar(List<Sessao> sessoes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqSessoes))) {
             for (Sessao sessao : sessoes) {
                 bw.write(sessao.getIdSessao() + ", " + sessao.getFilme().getTitulo() + ", "

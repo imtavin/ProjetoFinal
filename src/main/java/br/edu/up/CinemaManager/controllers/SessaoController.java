@@ -13,7 +13,7 @@ public class SessaoController extends AbstractCRUD<Sessao> {
     private static final Logger logger = LogManager.getLogger(SessaoController.class);
 
     public SessaoController() {
-        items = SessaoDao.carregarSessoes(); // Carrega sessões do arquivo na inicialização
+        items = SessaoDao.carregar(); // Carrega sessões do arquivo na inicialização
         logger.info("Sessões carregadas do arquivo.");
     }
 
@@ -25,7 +25,7 @@ public class SessaoController extends AbstractCRUD<Sessao> {
             }
         }
         create(sessao);
-        SessaoDao.salvarSessoes(items); // Salva a lista atualizada de sessões
+        SessaoDao.salvar(items); // Salva a lista atualizada de sessões
         logger.info("Sessão adicionada: " + sessao.getIdSessao());
     }
 
@@ -33,7 +33,7 @@ public class SessaoController extends AbstractCRUD<Sessao> {
         Sessao sessao = buscarSessao(idSessao);
         if (sessao != null) {
             delete(sessao);
-            SessaoDao.salvarSessoes(items); // Salva a lista atualizada de sessões
+            SessaoDao.salvar(items); // Salva a lista atualizada de sessões
             logger.info("Sessão removida: " + idSessao);
             return true;
         } else {

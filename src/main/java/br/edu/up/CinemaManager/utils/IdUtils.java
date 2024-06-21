@@ -8,6 +8,7 @@ public class IdUtils {
 
     private static Integer idSessao = 0;
     private static Integer idFilme = 0;
+    private static Integer idTransacao = 0;
 
     public static Integer newIdSessao(){
         idSessao = idSessao + 1;
@@ -17,6 +18,11 @@ public class IdUtils {
     public static Integer newIdFilme (){
         idFilme = idFilme + 1;
         return idFilme;
+    }
+
+    public static Integer newIdTransacao(){
+        idTransacao = idTransacao + 1;
+        return idTransacao;
     }
 
     public static Integer getIdSessao() {
@@ -33,5 +39,13 @@ public class IdUtils {
 
     public static void setIdFilme(Integer idFilme) {
         IdUtils.idFilme = idFilme;
+    }
+
+    public static Integer getIdTransacao() {
+        return idTransacao;
+    }
+
+    public static void setIdTransacao(Integer idTransacao) {
+        IdUtils.idTransacao = idTransacao;
     }
 }

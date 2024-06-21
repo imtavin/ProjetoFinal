@@ -9,13 +9,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmeDao {
+public class FilmeDao implements GenericDao<Filme>{
     private static final Logger logger = LogManager.getLogger(FilmeDao.class);
 
     private static List<Filme> filmes = new ArrayList<Filme>();
     private static final File arqFilmes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaFilmes.txt");
 
-    public static List<Filme> carregarFilmes() {
+    public static List<Filme> carregar() {
         try (BufferedReader br = new BufferedReader(new FileReader(arqFilmes))){
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -39,7 +39,7 @@ public class FilmeDao {
         return filmes;
     }
 
-    public static void salvarFilmes(List<Filme> filmes) {
+    public static void salvar(List<Filme> filmes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes))){
             for (Filme filme : filmes) {
                 bw.write(filme.toString());

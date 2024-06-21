@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClienteDao {
+public class ClienteDao implements GenericDao<Cliente>{
     private static final Logger logger = LogManager.getLogger(ClienteDao.class);
 
     private static List<Cliente> clientes = new ArrayList<Cliente>();
     private static final File arqClientes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaClientes.txt");
 
-    public static List<Cliente> carregarClientes(){
+    public static List<Cliente> carregar(){
         try {
             BufferedReader br = new BufferedReader(new FileReader(arqClientes));
             String linha;
@@ -35,7 +35,7 @@ public class ClienteDao {
         return clientes;
     }
 
-    public static void salvarCliente(List<Cliente> clientes){
+    public static void salvar(List<Cliente> clientes){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(arqClientes));
             for (Cliente cliente : clientes) {

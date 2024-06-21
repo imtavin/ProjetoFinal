@@ -15,7 +15,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     private List<Cliente> clientes;
 
     public ClienteController() {
-        this.clientes = ClienteDao.carregarClientes();
+        this.clientes = ClienteDao.carregar();
     }
 
     public void adicionarCliente(Cliente cliente) {
@@ -23,7 +23,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
             logger.warn("Cliente com CPF " + cliente.getCpf() + " já está cadastrado.");
         } else {
             clientes.add(cliente);
-            ClienteDao.salvarCliente(clientes);
+            ClienteDao.salvar(clientes);
             logger.info("Cliente adicionado com sucesso: " + cliente);
         }
     }
@@ -32,7 +32,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
         Cliente cliente = buscarCliente(cpf);
         if (cliente != null) {
             clientes.remove(cliente);
-            ClienteDao.salvarCliente(clientes);
+            ClienteDao.salvar(clientes);
             logger.info("Cliente removido com sucesso: " + cliente);
         } else {
             logger.warn("Cliente com CPF " + cpf + " não encontrado.");
@@ -58,7 +58,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
         Cliente cliente = buscarCliente(clienteAtualizado.getCpf());
         if (cliente != null) {
             cliente.setNome(clienteAtualizado.getNome());
-            ClienteDao.salvarCliente(clientes);
+            ClienteDao.salvar(clientes);
             logger.info("Cliente atualizado com sucesso: " + clienteAtualizado);
         } else {
             logger.warn("Cliente com CPF " + clienteAtualizado.getCpf() + " não encontrado.");
