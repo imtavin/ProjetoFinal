@@ -17,7 +17,7 @@ public class SessaoDao {
     private static List<Sessao> sessoes = new ArrayList<>();
     static File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
 
-    public static Sessao carregarSessao() {
+    public static List<Sessao> carregarSessoes() {
         try (BufferedReader br = new BufferedReader(new FileReader(arqSessoes))) {
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -48,14 +48,14 @@ public class SessaoDao {
                 }
             }
             br.close();
-            return (Sessao) sessoes;
+            return sessoes;
         }catch (IOException e) {
             logger.error("Ocorreu um errou ao carregar as sessões.", e);
         }
         return null;
     }
 
-    public static void salvarSessao(List<Sessao> sessoes) {
+    public static void salvarSessoes(List<Sessao> sessoes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqSessoes))) {
             for (Sessao sessao : sessoes) {
                 bw.write(sessao.getIdSessao() + ", " + sessao.getFilme().getTitulo() + ", "

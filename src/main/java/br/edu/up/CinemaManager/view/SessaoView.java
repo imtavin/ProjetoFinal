@@ -1,13 +1,20 @@
 package br.edu.up.CinemaManager.view;
 
+import br.edu.up.CinemaManager.controllers.SessaoController;
+import br.edu.up.CinemaManager.models.Filme;
+import br.edu.up.CinemaManager.controllers.FilmeController;
+import br.edu.up.CinemaManager.models.Sessao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SessaoView {
     private static final Logger logger = LogManager.getLogger(SessaoView.class);
     static Scanner scannerSessao = new Scanner(System.in);
+    private static FilmeController filmeController = new FilmeController();
+    private static SessaoController sessaoController = new SessaoController();
 
     public static void menuSessao(){
         Integer opcaoSessao = 1;
@@ -42,16 +49,66 @@ public class SessaoView {
 
     }
     public static void adicionarSessao(){
-        
+        List<Filme> listaFilmesOrdenados = filmeController.listarFilmesOrdenadosPorTitulo();
+        for (Filme i : listaFilmesOrdenados){
+            System.out.println("Titulo: " + i.getTitulo() + "\n    ID: " + i.getId());
+        }
+
+        System.out.println("Informe o ID do filme ou o título do filme:");
+        String input = scannerSessao.next();
+        Filme filme = null;
+
+        try {
+            int idFilme = Integer.parseInt(input);
+            filme = filmeController.buscarFilmeId(idFilme);
+        } catch (NumberFormatException e) {
+            filme = filmeController.buscarFilmeTitulo(input);
+        }
+
+        if (filme == null) {
+            System.out.println("Filme não encontrado.");
+        }
+
+        System.out.println("Informe o horário da sessão (formato HH:MM):");
+        String horario = scannerSessao.next();
+
+        System.out.println("A sessão é dublada? (true/false):");
+        boolean tipoDublado = scannerSessao.nextBoolean();
+
+        System.out.println("A sessão é 3D? (true/false):");
+        boolean tipo3D = scannerSessao.nextBoolean();
+
+        System.out.println("Informe o número da sala:");
+        int sala = scannerSessao.nextInt();
+
+        Sessao sessao = new Sessao(filme, horario, tipoDublado, tipo3D, sala);
+        sessaoController.adicionarSessao(sessao);
+        System.out.println("Sessão adicionada com sucesso.");
     }
+
     public static void removerSessao(){
-
+        System.out.println("Informe o ID da sessão a ser removido:");
+        int IDSessaoRemover = scannerSessao.nextInt();
+        boolean sessaoRemover = sessaoController.deletarSessao(IDSessaoRemover);
+        if (!sessaoRemover) {
+            System.out.println("Sessão deletada com sucesso.");
+        } else {
+            System.out.println("Sessão não encontrado.");
+        }
     }
+
     public static void pesquisarSessao(){
-
+        System.out.println("Pesquisar sessao, informe o ID da sessao:");
+        int IDSessaoPesquisar = scannerSessao.nextInt();
+        Sessao sessaoPesquisar = sessaoController.buscarSessao(IDSessaoPesquisar);
+        System.out.println("Sessão: " + sessaoPesquisar.toString());
     }
-    public static void listarSessao(){
 
+    public static void listarSessao(){
+        List<Sessao> sessoes = sessaoController.listarSessoesOrdenadasPorHorario();
+        for (Sessao sessao : sessoes) {
+            System.out.println(sessao);
+        }
     }
 
 }
