@@ -23,6 +23,11 @@ public class TransacaoView {
     private static SessaoView sessaoView = new SessaoView();
 
     public static void menuTransacao(){
+        /**
+        * Método responsável pelas escolhas relacionadas ao uso do Modelo Transacao
+        * @param scannerTransacao
+        * @param opcaoTransacao
+        */
         Integer opcaoTransacao = 1;
         while (opcaoTransacao != 4){
             System.out.println("//////////////TRANSAÇÕES//////////////");
@@ -50,6 +55,26 @@ public class TransacaoView {
     }
 
     public static void venderIngresso(){
+        /**
+        * Método responsável pela venda de ingressos para uma sessão.
+        * @param scannerTransacao
+        * @param quantidade
+        * @param ingressos
+        * @param clienteController
+        * @param cpf
+        * @param cliente
+        * @param ClienteView
+        * @param filmeController
+        * @param tituloFilme
+        * @param filme
+        * @param idSessao
+        * @param sessaoView
+        * @param sessao
+        * @param assento
+        * @param meia
+        * @param horario
+        * @param transacao
+        */
         System.out.println("Quantos ingressos deseja comprar?");
         int quantidade = scannerTransacao.nextInt();
         scannerTransacao.nextLine(); // Limpar o buffer do scanner
@@ -112,10 +137,20 @@ public class TransacaoView {
     }
 
     public static void valorArrecadado(){
+        /**
+        * Método responsável por listar o total arrecadado com vendas
+        * @param transacaoController
+        */
         System.out.println("O valor arrecado com ingressos é igual a R$" + transacaoController.somarValoresTotaisTransacoes());
     }
 
     public static void listarTransacoes(){
+        /**
+        * Método responsável por listar todas as transações realizadas em ordem
+        * @param transacoesOrdenadas
+        * @param transacaoController
+        * @param transacao
+        */
         List<Transacao> transacoesOrdenadas = transacaoController.listarTransacoesOrdenadasPorData();
 
         for (Transacao transacao : transacoesOrdenadas) {
@@ -133,6 +168,12 @@ public class TransacaoView {
     }
 
     public static void mostrarAssentosDisponiveis(List<String> assentosDisponiveis){
+        /**
+        * Método responsável por mostrar os Assentos disponíveis para compra.
+        * @param fileiras
+        * @param colunas
+        * @param mapaAssentos
+        */
         char[] fileiras = {'A', 'B', 'C', 'D', 'E', 'F'};
         int colunas = 11;
 
