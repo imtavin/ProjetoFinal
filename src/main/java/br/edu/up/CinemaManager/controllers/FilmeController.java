@@ -39,6 +39,12 @@ public class FilmeController extends AbstractCRUD<Filme> {
     }
 
     public void deletarFilme(Integer id) {
+        /**
+      *Método para deletar filmes
+      * @param filme
+      * @param filmeDao
+      * @param logger
+      */  
         Filme filme = buscarFilmeId(id);
         if (filme != null) {
             delete(filme);
@@ -50,6 +56,12 @@ public class FilmeController extends AbstractCRUD<Filme> {
     }
 
     public Filme buscarFilmeTitulo(String titulo) {
+      /**
+      *Método para buscar filmes
+      * @param Filme
+      * @param logger
+      * @exception FilmeNotFound
+      */  
         try {
             for (Filme i : items) {
                 if (i.getTitulo().equals(titulo)) {
@@ -73,6 +85,12 @@ public class FilmeController extends AbstractCRUD<Filme> {
     }
 
     public List<Filme> listarFilmesOrdenadosPorTitulo() {
+      /**
+      *Método para listar filmes em ordem de t
+      * @return
+      * @param filmesOrdenadas
+      * @param logger
+      */  
         List<Filme> filmesOrdenados = new ArrayList<>(items);
         filmesOrdenados.sort(Comparator.comparing(Filme::getTitulo));
         return filmesOrdenados;
