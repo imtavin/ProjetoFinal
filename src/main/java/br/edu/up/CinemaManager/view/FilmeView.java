@@ -16,8 +16,8 @@ public class FilmeView {
     public static void menuFilme() {
         /**
         * Método responsável por lidar com a escolha do usuário em relação ao modelo Filmes
-        * @param scannerFilmes
-        * @param opcaoFilmes
+        * @param scannerFilme
+        * @param opcaoFilme
         */
         Integer opcaoFilme = 1;
         while (opcaoFilme != 5) {
@@ -54,12 +54,13 @@ public class FilmeView {
     public static void adicionarFilme() {
         /**
         * Método responsável por adicionar filmes ao banco de dados
-        * @param scannerFilmes
+        * @param scannerFilme
         * @param titulo
         * @param genero
         * @param diretor
         * @param idade
         * @param filme
+        * @param filmeController
         */
         System.out.println("Informe o título do filme:");
         String titulo = scannerFilme.nextLine(); // Consumir quebra de linha pendente
@@ -79,8 +80,9 @@ public class FilmeView {
     public static void removerFilme() {
         /**
         * Método responsável por remover filmes do banco de dados
-        * @param scannerFilmes
-        * @param opcaoFilmes
+        * @param scannerFilme
+        * @param IdRemover
+        * @param filmeController
         */
         listarFilmes();
         System.out.println("Informe o ID do filme a ser removido:");
@@ -91,9 +93,10 @@ public class FilmeView {
     public static void pesquisarFilme() {
         /**
         * Método responsável por pesquisar filmes no banco de dados
-        * @param scannerFilmes
+        * @param scannerFilme
         * @param tituloPesquisar
         * @param filme
+        * @param filmeController
         */
         System.out.println("Informe o título do filme a ser pesquisado:");
         String tituloPesquisar = scannerFilme.nextLine(); // Consumir quebra de linha pendente
@@ -115,6 +118,7 @@ public class FilmeView {
         /**
         * Método responsável por listar os filmes no Banco de Dados
         * @param listaFilmesOrdenados
+        * @param filmeController
         */
         List<Filme> listaFilmesOrdenados = filmeController.listarFilmesOrdenadosPorTitulo();
         for (Filme i : listaFilmesOrdenados){
