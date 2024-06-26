@@ -2,11 +2,11 @@ package br.edu.up.CinemaManager.models;
 
 public class Ingresso {
     private Sessao sessao;
-    private int assento;
+    private String assento;
     private boolean meia;
     private double preco;
 
-    public Ingresso(Sessao sessao, int assento, boolean meia) {
+    public Ingresso(Sessao sessao, String assento, boolean meia) {
         this.sessao = sessao;
         this.assento = assento;
         this.meia = meia;
@@ -21,7 +21,7 @@ public class Ingresso {
         return sessao;
     }
 
-    public int getAssento() {
+    public String getAssento() {
         return assento;
     }
 

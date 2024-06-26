@@ -58,4 +58,14 @@ public class SessaoController extends AbstractCRUD<Sessao> {
         logger.info("Sessões listadas em ordem de horário.");
         return sessoesOrdenadas;
     }
+
+    public List<Sessao> listarSessoesOrdenadasPorFilme(String tituloFilme) {
+        List<Sessao> sessoesOrdenadas = new ArrayList<>();
+        for (Sessao sessao : items) {
+            if (sessao.getFilme().getTitulo().equalsIgnoreCase(tituloFilme)) {
+                sessoesOrdenadas.add(sessao);
+            }
+        }
+        return sessoesOrdenadas;
+    }
 }

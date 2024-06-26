@@ -1,5 +1,6 @@
 package br.edu.up.CinemaManager.daos;
 
+import br.edu.up.CinemaManager.controllers.FilmeController;
 import br.edu.up.CinemaManager.models.Filme;
 import br.edu.up.CinemaManager.models.Sessao;
 import br.edu.up.CinemaManager.utils.IdUtils;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class SessaoDao implements GenericDao<Sessao>{
     private static final Logger logger = LogManager.getLogger(SessaoDao.class);
+    private static FilmeController filmeController = new FilmeController();
 
     private static List<Sessao> sessoes = new ArrayList<>();
     private static final File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
@@ -38,7 +40,7 @@ public class SessaoDao implements GenericDao<Sessao>{
                     IdUtils.setIdSessao(idSessao);
                 }
 
-                Filme filme = null;
+                Filme filme = filmeController.buscarFilmeTitulo(tituloFilme);
                 if (filme != null) {
                     Sessao sessao = new Sessao(idSessao, filme, horario, tipo3D, tipoDublado, sala, assentos);
                     sessoes.add(sessao);

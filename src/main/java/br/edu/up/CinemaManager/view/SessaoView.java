@@ -111,4 +111,16 @@ public class SessaoView {
         }
     }
 
+    public static void listarSessaoPorFilme(String tituloFilme){
+        List<Sessao> sessoes = sessaoController.listarSessoesOrdenadasPorFilme(tituloFilme);
+        for (Sessao sessao : sessoes) {
+            System.out.println("ID: " + sessao.getIdSessao());
+            System.out.println("Horário: " + sessao.getHorario());
+            System.out.println("Sessao " + (sessao.getTipo3D() ? "3D" : "2D"));
+            System.out.println("Sessao " + (sessao.getTipoDublado() ? "Dublada" : "Legendada"));
+            System.out.println("Sala: " + sessao.getSala());
+            System.out.println("--------------------------------------");
+        }
+    }
+
 }
