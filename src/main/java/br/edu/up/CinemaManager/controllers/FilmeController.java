@@ -75,6 +75,12 @@ public class FilmeController extends AbstractCRUD<Filme> {
     }
 
     public Filme buscarFilmeId(Integer id) {
+        /**
+      *Método para buscar filmes
+      * @return
+      * @param items
+      * @param logger
+      */  
         for (Filme i : items) {
             if (i.getId() == id) {
                 return i;
