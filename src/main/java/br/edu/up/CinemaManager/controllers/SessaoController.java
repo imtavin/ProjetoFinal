@@ -13,8 +13,13 @@ public class SessaoController extends AbstractCRUD<Sessao> {
     private static final Logger logger = LogManager.getLogger(SessaoController.class);
 
     public SessaoController() {
-        items = SessaoDao.carregar(); // Carrega sessões do arquivo na inicialização
-        logger.info("Sessões carregadas do arquivo.");
+        items = new ArrayList<>();
+        carregarSessoes();
+    }
+
+    public void carregarSessoes(){
+        items.clear();
+        items.addAll(SessaoDao.carregar());
     }
 
     public void adicionarSessao(Sessao sessao) {

@@ -13,8 +13,13 @@ public class TransacaoController extends AbstractCRUD<Transacao> {
     private static final Logger logger = LogManager.getLogger(TransacaoController.class);
 
     public TransacaoController() {
-        items = TransacaoDao.carregarTransacoes();
-        logger.info("Transações carregadas do arquivo.");
+        items = new ArrayList<>();
+        carregarTransacoes();
+    }
+
+    public void carregarTransacoes(){
+        items.clear();
+        items.addAll(TransacaoDao.carregar());
     }
 
     public void adicionarTransacao(Transacao transacao) {
@@ -25,7 +30,7 @@ public class TransacaoController extends AbstractCRUD<Transacao> {
             }
         }
         create(transacao);
-        TransacaoDao.salvarTransacoes(items);
+        TransacaoDao.salvar(items);
         logger.info("Transação adicionada: " + transacao.getIdTransacao());
     }
 
@@ -33,7 +38,7 @@ public class TransacaoController extends AbstractCRUD<Transacao> {
         Transacao transacao = buscarTransacaoId(id);
         if (transacao != null) {
             delete(transacao);
-            TransacaoDao.salvarTransacoes(items);
+            TransacaoDao.salvar(items);
             logger.info("Transação removida: " + transacao.getIdTransacao());
         } else {
             logger.warn("Tentativa de remover uma transação não encontrada: " + id);

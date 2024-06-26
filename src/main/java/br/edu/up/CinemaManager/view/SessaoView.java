@@ -20,7 +20,6 @@ public class SessaoView {
         Integer opcaoSessao = 1;
         while (opcaoSessao != 5){
             System.out.println("//////////////SESSÕES//////////////");
-            Integer opSessao;
             System.out.println("1-Adicionar Sessão");
             System.out.println("2-Remover Sessão");
             System.out.println("3-Pesquisar Sessão");

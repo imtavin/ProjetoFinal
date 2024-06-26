@@ -13,8 +13,13 @@ public class FilmeController extends AbstractCRUD<Filme> {
     private static final Logger logger = LogManager.getLogger(FilmeController.class);
 
     public FilmeController() {
-        items = FilmeDao.carregar(); // Carrega filmes do arquivo na inicialização
-        logger.info("Filmes carregados do arquivo.");
+        items = new ArrayList<>();
+        carregarFilmes();
+    }
+
+    public void carregarFilmes(){
+        items.clear();
+        items.addAll(FilmeDao.carregar());
     }
 
     public void adicionarFilme(Filme filme) {

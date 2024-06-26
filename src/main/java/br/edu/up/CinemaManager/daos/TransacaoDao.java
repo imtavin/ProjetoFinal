@@ -6,6 +6,7 @@ import br.edu.up.CinemaManager.models.Cliente;
 import br.edu.up.CinemaManager.models.Ingresso;
 import br.edu.up.CinemaManager.models.Sessao;
 import br.edu.up.CinemaManager.models.Transacao;
+import br.edu.up.CinemaManager.utils.IdUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,15 +18,29 @@ public class TransacaoDao implements GenericDao<Transacao> {
     private static final Logger logger = LogManager.getLogger(TransacaoDao.class);
     private static final String filePath = "E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaTransacoes.txt";
 
-    private static SessaoController sessaoController = new SessaoController();
-    private static ClienteController clienteController = new ClienteController();
+    private static final SessaoController sessaoController = new SessaoController();
+    private static final ClienteController clienteController = new ClienteController();
 
-    public static List<Transacao> carregarTransacoes() {
-        return GenericDao.carregar(filePath, TransacaoDao::parseTransacao);
+    public static List<Transacao> carregar() {
+        List<Transacao> transacoes = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                Transacao transacao = parseTransacao(linha);
+                transacoes.add(transacao);
+            }
+        } catch (IOException e) {
+            logger.error("Ocorreu um erro ao carregar as transações.", e);
+        }
+        return transacoes;
     }
 
-    public static void salvarTransacoes(List<Transacao> transacoes) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+    public static void salvar(List<Transacao> transacoes) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
+
             for (Transacao transacao : transacoes) {
                 bw.write(transacao.getIdTransacao() + ",");
                 for (Ingresso ingresso : transacao.getIngressos()) {
@@ -37,7 +52,7 @@ public class TransacaoDao implements GenericDao<Transacao> {
                 }
                 bw.write(transacao.getCliente().getCpf() + ",");
                 bw.write(transacao.getHorario() + ",");
-                bw.write(transacao.getValorTotal() + "\n");
+                bw.write(String.valueOf(transacao.getValorTotal()) + "\n");
             }
         } catch (IOException e) {
             logger.error("Ocorreu um erro ao salvar as transações.", e);
@@ -46,30 +61,31 @@ public class TransacaoDao implements GenericDao<Transacao> {
 
     private static Transacao parseTransacao(String linha) {
         String[] dados = linha.split(",");
-        int index = 0;
-
-        int idTransacao = Integer.parseInt(dados[index++]);
+        int idTransacao = Integer.parseInt(dados[0].trim());
         List<Ingresso> ingressos = new ArrayList<>();
-
-        while (index < dados.length && !dados[index].contains("@")) {
-            String assento = dados[index++];
-            boolean meia = Boolean.parseBoolean(dados[index++]);
-            int idSessao = Integer.parseInt(dados[index++]);
-
-            Sessao sessao = null;
-            if (!"null".equals(idSessao)) {
-                sessao = sessaoController.buscarSessao(idSessao);
+        int i = 1;
+        while (i < dados.length - 3) {
+            String assento = dados[i].trim();
+            boolean meia = Boolean.parseBoolean(dados[i + 1].trim());
+            int idSessao = Integer.parseInt(dados[i + 2].trim());
+            Sessao sessao = sessaoController.buscarSessao(idSessao);
+            if (sessao == null) {
+                ingressos.add(new Ingresso(null, assento, meia));
+            } else {
+                ingressos.add(new Ingresso(sessao, assento, meia));
             }
-
-            Ingresso ingresso = new Ingresso(sessao, assento, meia);
-            ingressos.add(ingresso);
+            i += 3;
         }
 
-        String cpfCliente = dados[index++];
+        String cpfCliente = dados[dados.length - 3].trim();
         Cliente cliente = clienteController.buscarCliente(cpfCliente);
 
-        String horario = dados[index++];
-        double valorTotal = Double.parseDouble(dados[index]);
+        String horario = dados[dados.length - 2].trim();
+        double valorTotal = Double.parseDouble(dados[dados.length - 1].trim());
+
+        if (idTransacao > IdUtils.getIdTransacao()) {
+            IdUtils.setIdTransacao(idTransacao);
+        }
 
         return new Transacao(idTransacao, ingressos, cliente, horario, valorTotal);
     }

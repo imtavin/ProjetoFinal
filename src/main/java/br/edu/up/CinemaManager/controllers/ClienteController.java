@@ -2,7 +2,6 @@ package br.edu.up.CinemaManager.controllers;
 
 import br.edu.up.CinemaManager.daos.ClienteDao;
 import br.edu.up.CinemaManager.models.Cliente;
-import br.edu.up.CinemaManager.models.Filme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,18 +11,23 @@ import java.util.List;
 
 public class ClienteController extends AbstractCRUD<Cliente>{
     private static final Logger logger = LogManager.getLogger(ClienteController.class);
-    private List<Cliente> clientes;
 
     public ClienteController() {
-        this.clientes = ClienteDao.carregar();
+        items = new ArrayList<>();
+        carregarClientes();
+    }
+
+    public void carregarClientes(){
+        items.clear();
+        items.addAll(ClienteDao.carregar());
     }
 
     public void adicionarCliente(Cliente cliente) {
         if (buscarCliente(cliente.getCpf()) != null) {
             logger.warn("Cliente com CPF " + cliente.getCpf() + " já está cadastrado.");
         } else {
-            clientes.add(cliente);
-            ClienteDao.salvar(clientes);
+            items.add(cliente);
+            ClienteDao.salvar(items);
             logger.info("Cliente adicionado com sucesso: " + cliente);
         }
     }
@@ -31,8 +35,8 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     public void removerCliente(String cpf) {
         Cliente cliente = buscarCliente(cpf);
         if (cliente != null) {
-            clientes.remove(cliente);
-            ClienteDao.salvar(clientes);
+            items.remove(cliente);
+            ClienteDao.salvar(items);
             logger.info("Cliente removido com sucesso: " + cliente);
         } else {
             logger.warn("Cliente com CPF " + cpf + " não encontrado.");
@@ -40,7 +44,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     }
 
     public Cliente buscarCliente(String cpf) {
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : items) {
             if (cliente.getCpf().equals(cpf)) {
                 return cliente;
             }
@@ -58,7 +62,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
         Cliente cliente = buscarCliente(clienteAtualizado.getCpf());
         if (cliente != null) {
             cliente.setNome(clienteAtualizado.getNome());
-            ClienteDao.salvar(clientes);
+            ClienteDao.salvar(items);
             logger.info("Cliente atualizado com sucesso: " + clienteAtualizado);
         } else {
             logger.warn("Cliente com CPF " + clienteAtualizado.getCpf() + " não encontrado.");

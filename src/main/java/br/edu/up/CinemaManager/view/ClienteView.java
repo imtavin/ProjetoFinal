@@ -77,7 +77,7 @@ public class ClienteView {
     public static void listarCliente(){
         List<Cliente> listaClienteOrdenados = clienteController.listarClientes();
         for (Cliente i : listaClienteOrdenados){
-            System.out.println(i.toString());
+            System.out.println("Nome: " + i.getNome() + "\nCPF: " + i.getCpf()  + "\nIdade: " + i.getIdade());
         }
     }
 }

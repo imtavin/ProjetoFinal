@@ -12,11 +12,12 @@ import java.util.List;
 public class FilmeDao implements GenericDao<Filme>{
     private static final Logger logger = LogManager.getLogger(FilmeDao.class);
 
-    private static List<Filme> filmes = new ArrayList<Filme>();
     private static final File arqFilmes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaFilmes.txt");
 
     public static List<Filme> carregar() {
-        try (BufferedReader br = new BufferedReader(new FileReader(arqFilmes))){
+        List<Filme> filmes = new ArrayList<Filme>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(arqFilmes));
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(",");
@@ -40,7 +41,9 @@ public class FilmeDao implements GenericDao<Filme>{
     }
 
     public static void salvar(List<Filme> filmes) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes))){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes));
+
             for (Filme filme : filmes) {
                 bw.write(filme.toString());
                 bw.newLine();

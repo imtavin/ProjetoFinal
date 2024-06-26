@@ -24,9 +24,8 @@ public class TransacaoView {
 
     public static void menuTransacao(){
         Integer opcaoTransacao = 1;
-        while (opcaoTransacao != 5){
+        while (opcaoTransacao != 4){
             System.out.println("//////////////TRANSAÇÕES//////////////");
-            Integer opTransacao;
             System.out.println("1-Vender Ingresso");
             System.out.println("2-Valor Arrecadado");
             System.out.println("3-Listar Transações");
@@ -61,7 +60,7 @@ public class TransacaoView {
         String cpf = scannerTransacao.nextLine();
         Cliente cliente = clienteController.buscarCliente(cpf);
 
-        if (cliente == null) ClienteView.adicionarCliente();
+        if (cliente == null) System.out.println("Cliente não cadastrado ainda."); ClienteView.adicionarCliente();
 
         for (int i = 0; i < quantidade; i++) {
             System.out.println("Ingresso " + (i + 1));
