@@ -59,6 +59,7 @@ public class ClienteView {
             * @param cpfCliente
             * @param idadeCliente
             * @param scannerCliente
+            * @param clienteController
             */
         System.out.println("Informe o nome do cliente:");
         String nomeCliente = scannerCliente.nextLine();
@@ -75,6 +76,7 @@ public class ClienteView {
             * Método responsável por remover um Cliente do banco de dados.
             * @param scannerCliente
             * @param cpfClienteRemover
+            * @param clienteController
             */
         System.out.println("Informe o CPF do cliente a ser removido:");
         String cpfClienteRemover = scannerCliente.next();
@@ -87,6 +89,7 @@ public class ClienteView {
             * @param scannerCliente
             * @param cpfClientePesquisar
             * @param cliente
+            * @param clienteController
             */
         System.out.println("Informe o CPF do cliente a ser pesquisado:");
         String cpfClientePesquisar = scannerCliente.next();
@@ -103,6 +106,7 @@ public class ClienteView {
             /**
            * Método responsável por listar os Clientes no banco de dados
            * @param listaClienteOrdenados
+           * @param clienteController
            */
         List<Cliente> listaClienteOrdenados = clienteController.listarClientes();
         for (Cliente i : listaClienteOrdenados){
