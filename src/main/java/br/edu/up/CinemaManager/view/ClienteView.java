@@ -14,14 +14,13 @@ public class ClienteView {
     static Scanner scannerCliente = new Scanner(System.in);
     private static ClienteController clienteController = new ClienteController();
 
-    /**
-    * Método responsável pelas escolhas relacionadas ao uso do Modelo Cliente
-    * @param scannerCliente
-    * @param opcaoCliente
-    */
-
-    
     public static void menuCliente() {
+        /**
+         * Método responsável pelas escolhas relacionadas ao uso do Modelo Cliente
+         * @param scannerCliente
+         * @param opcaoCliente
+         */
+
         Integer opcaoCliente = 1;
         while (opcaoCliente != 5) {
             System.out.println("//////////////CLIENTES//////////////");
@@ -53,14 +52,15 @@ public class ClienteView {
         }
     }
     public static void adicionarCliente(){
-            /**
-            * Método responsável por adicionar um novo cliente ao banco de dados
-            * @param nomeCliente
-            * @param cpfCliente
-            * @param idadeCliente
-            * @param scannerCliente
-            * @param clienteController
-            */
+        /**
+        * Método responsável por adicionar um novo cliente ao banco de dados
+        * @param nomeCliente
+        * @param cpfCliente
+        * @param idadeCliente
+        * @param scannerCliente
+        * @param clienteController
+        */
+
         System.out.println("Informe o nome do cliente:");
         String nomeCliente = scannerCliente.nextLine();
         nomeCliente = scannerCliente.nextLine();

@@ -2,6 +2,7 @@ package br.edu.up.CinemaManager.controllers;
 
 import br.edu.up.CinemaManager.daos.GenericDao;
 import br.edu.up.CinemaManager.daos.SessaoDao;
+import br.edu.up.CinemaManager.exceptions.SessaoNotFoundException;
 import br.edu.up.CinemaManager.models.Sessao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +41,7 @@ public class SessaoController extends AbstractCRUD<Sessao> {
             return true;
         } else {
             logger.warn("Tentativa de remover uma sessão não encontrada: " + idSessao);
-            return false;
+            throw new SessaoNotFoundException("Sessão não encontrada: " + idSessao);
         }
     }
 
@@ -51,21 +52,7 @@ public class SessaoController extends AbstractCRUD<Sessao> {
             }
         }
         logger.warn("Sessão não encontrada: " + idSessao);
-        return null;
-    }
-
-    @Override
-    public void update(Sessao sessaoAtualizada) {
-        Sessao sessao = buscarSessao(sessaoAtualizada.getIdSessao());
-        if (sessao != null) {
-            sessao.setHorario(sessaoAtualizada.getHorario());
-            sessao.setFilme(sessaoAtualizada.getFilme());
-            // Atualize outros atributos conforme necessário
-            sessaoDao.salvar(items);
-            logger.info("Sessão atualizada com sucesso: " + sessaoAtualizada);
-        } else {
-            logger.warn("Sessão com ID " + sessaoAtualizada.getIdSessao() + " não encontrada.");
-        }
+        throw new SessaoNotFoundException("Sessão não encontrada: " + idSessao);
     }
 
     public List<Sessao> listarSessoesOrdenadasPorHorario() {
@@ -83,5 +70,22 @@ public class SessaoController extends AbstractCRUD<Sessao> {
             }
         }
         return sessoesOrdenadas;
+    }
+
+    public void atualizarSessao(Sessao sessaoAtualizada) {
+        Sessao sessaoExistente = buscarSessao(sessaoAtualizada.getIdSessao());
+        if (sessaoExistente != null) {
+            int index = items.indexOf(sessaoExistente);
+            if (index != -1) {
+                items.set(index, sessaoAtualizada);
+                sessaoExistente.setAssentosDisponiveis(sessaoAtualizada.getAssentosDisponiveis());
+                sessaoDao.salvar(items);
+                logger.info("Sessão atualizada com sucesso: " + sessaoAtualizada);
+            } else {
+                logger.warn("Erro ao atualizar sessão. Sessão não encontrada na lista.");
+            }
+        } else {
+            logger.warn("Erro ao atualizar sessão. Sessão não encontrada pelo ID: " + sessaoAtualizada.getIdSessao());
+        }
     }
 }

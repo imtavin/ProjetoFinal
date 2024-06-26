@@ -16,8 +16,11 @@ public class Transacao {
         this.ingressos = ingressos;
         this.cliente = cliente;
         this.horario = horario;
-        this.valorTotal = valorTotal;
         this.idTransacao = IdUtils.newIdTransacao();
+
+        for (Ingresso ingresso : ingressos) {
+            this.valorTotal = this.valorTotal + ingresso.getPreco();
+        }
     }
 
     public Transacao(int idTransacao, List<Ingresso> ingressos, Cliente cliente, String horario, double valorTotal) {

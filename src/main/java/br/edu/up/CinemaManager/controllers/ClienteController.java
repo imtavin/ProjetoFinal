@@ -23,6 +23,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
         if (buscarCliente(cliente.getCpf()) != null) {
             logger.warn("Cliente com CPF " + cliente.getCpf() + " já está cadastrado.");
         } else {
+            create(cliente);
             items.add(cliente);
             clienteDao.salvar(items);
             logger.info("Cliente adicionado com sucesso: " + cliente);
@@ -32,6 +33,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     public void removerCliente(String cpf) {
         Cliente cliente = buscarCliente(cpf);
         if (cliente != null) {
+            delete(cliente);
             items.remove(cliente);
             clienteDao.salvar(items);
             logger.info("Cliente removido com sucesso: " + cliente);

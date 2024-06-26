@@ -13,7 +13,7 @@ public class Sessao {
     private boolean tipoDublado;
     private int sala;
     private List<String> assentosDisponiveis;
-    private double preco = 30.00;
+    private double preco = 20.00;
 
     public Sessao(Filme filme, String horario, boolean tipoDublado, boolean tipo3D, int sala) {
         this.filme = filme;
@@ -109,6 +109,10 @@ public class Sessao {
 
     public List<String> getAssentosDisponiveis() {
         return assentosDisponiveis;
+    }
+
+    public void setAssentosDisponiveis(List<String> assentosDisponiveis) {
+        this.assentosDisponiveis = assentosDisponiveis;
     }
 
     @Override

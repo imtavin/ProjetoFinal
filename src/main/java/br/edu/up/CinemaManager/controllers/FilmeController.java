@@ -2,6 +2,7 @@ package br.edu.up.CinemaManager.controllers;
 
 import br.edu.up.CinemaManager.daos.FilmeDao;
 import br.edu.up.CinemaManager.daos.GenericDao;
+import br.edu.up.CinemaManager.exceptions.FilmeNotFoundException;
 import br.edu.up.CinemaManager.models.Filme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,12 +44,15 @@ public class FilmeController extends AbstractCRUD<Filme> {
     }
 
     public Filme buscarFilmeTitulo(String titulo) {
-        for (Filme i : items) {
-            if (i.getTitulo().equals(titulo)) {
-                return i;
+        try {
+            for (Filme i : items) {
+                if (i.getTitulo().equals(titulo)) {
+                    return i;
+                }
             }
+        }catch (FilmeNotFoundException e){
+            logger.warn("Filme não encontrado: " + e);
         }
-        logger.warn("Filme não encontrado: " + titulo);
         return null;
     }
 

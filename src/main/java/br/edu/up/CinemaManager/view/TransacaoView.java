@@ -49,7 +49,7 @@ public class TransacaoView {
         }
     }
 
-    public static void venderIngresso(){
+    public static void venderIngresso() {
         System.out.println("Quantos ingressos deseja comprar?");
         int quantidade = scannerTransacao.nextInt();
         scannerTransacao.nextLine(); // Limpar o buffer do scanner
@@ -60,7 +60,10 @@ public class TransacaoView {
         String cpf = scannerTransacao.nextLine();
         Cliente cliente = clienteController.buscarCliente(cpf);
 
-        if (cliente == null) System.out.println("Cliente não cadastrado ainda."); ClienteView.adicionarCliente();
+        if (cliente == null) {
+            System.out.println("Cliente não cadastrado ainda.");
+            ClienteView.adicionarCliente();
+        }
 
         for (int i = 0; i < quantidade; i++) {
             System.out.println("Ingresso " + (i + 1));
@@ -94,8 +97,11 @@ public class TransacaoView {
 
             if (cliente != null && filme != null && sessao != null) {
                 System.out.println("Ingresso vendido com sucesso para " + cliente.getNome());
-                ingressos.add(new Ingresso(sessao, assento, meia));
+                Ingresso ingreso = new Ingresso(sessao, assento, meia);
+                ingressos.add(ingreso);
                 sessao.ocuparAssento(assento);
+                sessaoController.atualizarSessao(sessao);
+
             } else {
                 System.out.println("Erro ao vender ingresso. Verifique os dados informados.");
             }
