@@ -20,6 +20,12 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     }
 
     public void adicionarCliente(Cliente cliente) {
+        /**
+         * Método responsável por adicionar os Clientes ao banco de dados
+         * @param logger
+         * @param clienteDao
+         * @param items
+         */
         if (buscarCliente(cliente.getCpf()) != null) {
             logger.warn("Cliente com CPF " + cliente.getCpf() + " já está cadastrado.");
         } else {
@@ -31,6 +37,13 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     }
 
     public void removerCliente(String cpf) {
+        /**
+         * Método responsável por remover um Cliente se este existir no banco de dados
+         * @param cliente
+         * @param clienteDao
+         * @param logger
+         * @param items
+         */
         Cliente cliente = buscarCliente(cpf);
         if (cliente != null) {
             delete(cliente);
@@ -43,6 +56,11 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     }
 
     public Cliente buscarCliente(String cpf) {
+        /**
+         * Método responsável por buscar Clientes
+         * @return
+         * @param clientes
+         */
         for (Cliente cliente : items) {
             if (cliente.getCpf().equals(cpf)) {
                 return cliente;
@@ -52,12 +70,23 @@ public class ClienteController extends AbstractCRUD<Cliente>{
     }
 
     public List<Cliente> listarClientes() {
+        /**
+         * Método responsável por listar os Clientes
+         * @return
+         * @param clientesOrdenados
+         */
         List<Cliente> clientesOrdenados = new ArrayList<>(items);
         clientesOrdenados.sort(Comparator.comparing(Cliente::getNome));
         return clientesOrdenados;
     }
 
     public void atualizarCliente(Cliente clienteAtualizado) {
+        /**
+         * Método responsável por atualizar informações de um cliente especificado no banco de dados, se o mesmo existir.
+         * @param cliente
+         * @param clienteDao
+         * @param logger
+         */
         Cliente cliente = buscarCliente(clienteAtualizado.getCpf());
         if (cliente != null) {
             cliente.setNome(clienteAtualizado.getNome());
