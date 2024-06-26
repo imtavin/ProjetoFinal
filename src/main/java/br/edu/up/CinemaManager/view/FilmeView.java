@@ -15,7 +15,7 @@ public class FilmeView {
 
     public static void menuFilme() {
         /**
-        * Método responsável por lidar com a escolha do usuário em relação ao modelo Filmes
+        * Método responsável por lidar com a escolha do usuário em relação ao modelo Filme
         * @param scannerFilme
         * @param opcaoFilme
         */
