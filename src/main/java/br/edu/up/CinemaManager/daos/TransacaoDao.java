@@ -17,15 +17,13 @@ import java.util.List;
 public class TransacaoDao implements GenericDao<Transacao> {
     private static final Logger logger = LogManager.getLogger(TransacaoDao.class);
     private static final String filePath = "E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaTransacoes.txt";
-
     private static final SessaoController sessaoController = new SessaoController();
     private static final ClienteController clienteController = new ClienteController();
 
-    public static List<Transacao> carregar() {
+    @Override
+    public List<Transacao> carregar() {
         List<Transacao> transacoes = new ArrayList<>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 Transacao transacao = parseTransacao(linha);
@@ -37,10 +35,9 @@ public class TransacaoDao implements GenericDao<Transacao> {
         return transacoes;
     }
 
-    public static void salvar(List<Transacao> transacoes) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
-
+    @Override
+    public void salvar(List<Transacao> transacoes) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (Transacao transacao : transacoes) {
                 bw.write(transacao.getIdTransacao() + ",");
                 for (Ingresso ingresso : transacao.getIngressos()) {
@@ -59,7 +56,7 @@ public class TransacaoDao implements GenericDao<Transacao> {
         }
     }
 
-    private static Transacao parseTransacao(String linha) {
+    private Transacao parseTransacao(String linha) {
         String[] dados = linha.split(",");
         int idTransacao = Integer.parseInt(dados[0].trim());
         List<Ingresso> ingressos = new ArrayList<>();
@@ -69,11 +66,7 @@ public class TransacaoDao implements GenericDao<Transacao> {
             boolean meia = Boolean.parseBoolean(dados[i + 1].trim());
             int idSessao = Integer.parseInt(dados[i + 2].trim());
             Sessao sessao = sessaoController.buscarSessao(idSessao);
-            if (sessao == null) {
-                ingressos.add(new Ingresso(null, assento, meia));
-            } else {
-                ingressos.add(new Ingresso(sessao, assento, meia));
-            }
+            ingressos.add(new Ingresso(sessao, assento, meia));
             i += 3;
         }
 

@@ -12,17 +12,15 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessaoDao implements GenericDao<Sessao>{
+public class SessaoDao implements GenericDao<Sessao> {
     private static final Logger logger = LogManager.getLogger(SessaoDao.class);
+    private static final File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
     private static FilmeController filmeController = new FilmeController();
 
-    private static final File arqSessoes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaSessoes.txt");
-
-    public static List<Sessao> carregar() {
+    @Override
+    public List<Sessao> carregar() {
         List<Sessao> sessoes = new ArrayList<>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(arqSessoes));
-
+        try (BufferedReader br = new BufferedReader(new FileReader(arqSessoes))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(",");
@@ -38,42 +36,34 @@ public class SessaoDao implements GenericDao<Sessao>{
                     assentos.add(assentoStr.trim());
                 }
 
+                Filme filme = filmeController.buscarFilmeTitulo(tituloFilme);
+                Sessao sessao = new Sessao(idSessao, filme, horario, tipo3D, tipoDublado, sala, assentos);
+                sessoes.add(sessao);
+
                 if (idSessao > IdUtils.getIdSessao()) {
                     IdUtils.setIdSessao(idSessao);
                 }
-
-                Filme filme = filmeController.buscarFilmeTitulo(tituloFilme);
-                if (filme != null) {
-                    Sessao sessao = new Sessao(idSessao, filme, horario, tipo3D, tipoDublado, sala, assentos);
-                    sessoes.add(sessao);
-                } else {
-                    Sessao sessao = new Sessao(idSessao, null, horario, tipo3D, tipoDublado, sala, assentos);
-                    sessoes.add(sessao);
-                }
             }
-            br.close();
-            return sessoes;
-        }catch (IOException e) {
-            logger.error("Ocorreu um errou ao carregar as sessões.", e);
+        } catch (IOException e) {
+            logger.error("Ocorreu um erro ao carregar as sessões.", e);
         }
-        return null;
+        return sessoes;
     }
 
-    public static void salvar(List<Sessao> sessoes) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(arqSessoes));
-
+    @Override
+    public void salvar(List<Sessao> sessoes) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqSessoes))) {
             for (Sessao sessao : sessoes) {
-                bw.write(sessao.getIdSessao() + ", " + sessao.getFilme().getTitulo() + ", "
-                        + sessao.getHorario() + ", " + sessao.getTipo3D() + ", "
-                        + sessao.getTipoDublado() + ", " + sessao.getSala() + ", " + Util.contatenaAssentos(sessao.getAssentosDisponiveis()));
+                bw.write(sessao.getIdSessao() + "," + sessao.getFilme().getTitulo() + "," +
+                        sessao.getHorario() + "," + sessao.getTipo3D() + "," + sessao.getTipoDublado() +
+                        "," + sessao.getSala() + "," + String.join("-", sessao.getAssentosDisponiveis()));
                 bw.newLine();
             }
-            bw.close();
-        }catch (IOException e) {
-            logger.error("Ocorreu um errou ao salvar as sessões.", e);
+        } catch (IOException e) {
+            logger.error("Ocorreu um erro ao salvar as sessões.", e);
         }
     }
 }
+
 
 

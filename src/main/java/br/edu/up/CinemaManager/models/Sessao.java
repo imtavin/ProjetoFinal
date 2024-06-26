@@ -78,6 +78,26 @@ public class Sessao {
         this.preco = preco;
     }
 
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public void setFilme(Filme filme) {
+        this.filme = filme;
+    }
+
+    public void setTipo3D(boolean tipo3D) {
+        this.tipo3D = tipo3D;
+    }
+
+    public void setTipoDublado(boolean tipoDublado) {
+        this.tipoDublado = tipoDublado;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
+
     public boolean ocuparAssento(String assento) {
         if (assentosDisponiveis.contains(assento)) {
             assentosDisponiveis.remove(String.valueOf(assento));
@@ -103,5 +123,6 @@ public class Sessao {
                 ", assentosDisponiveis=" + assentosDisponiveis +
                 '}';
     }
+
 }
 

@@ -1,6 +1,7 @@
 package br.edu.up.CinemaManager.controllers;
 
 import br.edu.up.CinemaManager.daos.FilmeDao;
+import br.edu.up.CinemaManager.daos.GenericDao;
 import br.edu.up.CinemaManager.models.Filme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,15 +12,11 @@ import java.util.List;
 
 public class FilmeController extends AbstractCRUD<Filme> {
     private static final Logger logger = LogManager.getLogger(FilmeController.class);
+    private GenericDao<Filme> filmeDao;
 
     public FilmeController() {
-        items = new ArrayList<>();
-        carregarFilmes();
-    }
-
-    public void carregarFilmes(){
-        items.clear();
-        items.addAll(FilmeDao.carregar());
+        filmeDao = new FilmeDao();
+        items = filmeDao.carregar();
     }
 
     public void adicionarFilme(Filme filme) {
@@ -30,7 +27,7 @@ public class FilmeController extends AbstractCRUD<Filme> {
             }
         }
         create(filme);
-        FilmeDao.salvar(items); // Salva a lista atualizada de filmes
+        filmeDao.salvar(items); // Salva a lista atualizada de filmes
         logger.info("Filme adicionado: " + filme.getTitulo());
     }
 
@@ -38,7 +35,7 @@ public class FilmeController extends AbstractCRUD<Filme> {
         Filme filme = buscarFilmeId(id);
         if (filme != null) {
             delete(filme);
-            FilmeDao.salvar(items); // Salva a lista atualizada de filmes
+            filmeDao.salvar(items); // Salva a lista atualizada de filmes
             logger.info("Filme removido: " + filme.getTitulo() + ", ID" + filme.getId());
         } else {
             logger.warn("Tentativa de remover um filme não encontrado: " + filme.getTitulo() + ", ID: " + filme.getId());

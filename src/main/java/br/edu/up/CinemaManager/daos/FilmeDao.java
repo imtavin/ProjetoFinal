@@ -9,15 +9,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmeDao implements GenericDao<Filme>{
+public class FilmeDao implements GenericDao<Filme> {
     private static final Logger logger = LogManager.getLogger(FilmeDao.class);
-
     private static final File arqFilmes = new File("E:\\UP\\5ºSem\\DesenvolvimentoDeSoftware\\CinemaManager\\data\\listaFilmes.txt");
 
-    public static List<Filme> carregar() {
-        List<Filme> filmes = new ArrayList<Filme>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(arqFilmes));
+    @Override
+    public List<Filme> carregar() {
+        List<Filme> filmes = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(arqFilmes))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(",");
@@ -25,33 +24,31 @@ public class FilmeDao implements GenericDao<Filme>{
                 String titulo = dados[1].trim();
                 String autor = dados[2].trim();
                 String genero = dados[3].trim();
-                Integer idadeIdicativa = Integer.valueOf(dados[4].trim());
-                Filme filme = new Filme(idFilme, titulo, autor, genero, idadeIdicativa);
+                int idadeIndicativa = Integer.parseInt(dados[4].trim());
+
+                Filme filme = new Filme(idFilme, titulo, autor, genero, idadeIndicativa);
                 filmes.add(filme);
 
                 if (idFilme > IdUtils.getIdFilme()) {
                     IdUtils.setIdFilme(idFilme);
                 }
             }
-            br.close();
-        }catch(IOException e){
+        } catch (IOException e) {
             logger.error("Ocorreu um erro ao carregar os filmes.", e);
         }
         return filmes;
     }
 
-    public static void salvar(List<Filme> filmes) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes));
-
+    @Override
+    public void salvar(List<Filme> filmes) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arqFilmes))) {
             for (Filme filme : filmes) {
                 bw.write(filme.toString());
                 bw.newLine();
             }
-            bw.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.error("Ocorreu um erro ao salvar os filmes.", e);
         }
     }
-
 }
+

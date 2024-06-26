@@ -1,6 +1,7 @@
 package br.edu.up.CinemaManager.controllers;
 
 import br.edu.up.CinemaManager.daos.ClienteDao;
+import br.edu.up.CinemaManager.daos.GenericDao;
 import br.edu.up.CinemaManager.models.Cliente;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,15 +12,11 @@ import java.util.List;
 
 public class ClienteController extends AbstractCRUD<Cliente>{
     private static final Logger logger = LogManager.getLogger(ClienteController.class);
+    private GenericDao<Cliente> clienteDao;
 
     public ClienteController() {
-        items = new ArrayList<>();
-        carregarClientes();
-    }
-
-    public void carregarClientes(){
-        items.clear();
-        items.addAll(ClienteDao.carregar());
+        clienteDao = new ClienteDao();
+        items = clienteDao.carregar();
     }
 
     public void adicionarCliente(Cliente cliente) {
@@ -27,7 +24,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
             logger.warn("Cliente com CPF " + cliente.getCpf() + " já está cadastrado.");
         } else {
             items.add(cliente);
-            ClienteDao.salvar(items);
+            clienteDao.salvar(items);
             logger.info("Cliente adicionado com sucesso: " + cliente);
         }
     }
@@ -36,7 +33,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
         Cliente cliente = buscarCliente(cpf);
         if (cliente != null) {
             items.remove(cliente);
-            ClienteDao.salvar(items);
+            clienteDao.salvar(items);
             logger.info("Cliente removido com sucesso: " + cliente);
         } else {
             logger.warn("Cliente com CPF " + cpf + " não encontrado.");
@@ -62,7 +59,7 @@ public class ClienteController extends AbstractCRUD<Cliente>{
         Cliente cliente = buscarCliente(clienteAtualizado.getCpf());
         if (cliente != null) {
             cliente.setNome(clienteAtualizado.getNome());
-            ClienteDao.salvar(items);
+            clienteDao.salvar(items);
             logger.info("Cliente atualizado com sucesso: " + clienteAtualizado);
         } else {
             logger.warn("Cliente com CPF " + clienteAtualizado.getCpf() + " não encontrado.");

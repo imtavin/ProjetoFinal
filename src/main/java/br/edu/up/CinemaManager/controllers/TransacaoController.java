@@ -1,5 +1,6 @@
 package br.edu.up.CinemaManager.controllers;
 
+import br.edu.up.CinemaManager.daos.GenericDao;
 import br.edu.up.CinemaManager.daos.TransacaoDao;
 import br.edu.up.CinemaManager.models.Transacao;
 import org.apache.logging.log4j.LogManager;
@@ -11,15 +12,11 @@ import java.util.List;
 
 public class TransacaoController extends AbstractCRUD<Transacao> {
     private static final Logger logger = LogManager.getLogger(TransacaoController.class);
+    private GenericDao<Transacao> transacaoDao;
 
     public TransacaoController() {
-        items = new ArrayList<>();
-        carregarTransacoes();
-    }
-
-    public void carregarTransacoes(){
-        items.clear();
-        items.addAll(TransacaoDao.carregar());
+        transacaoDao = new TransacaoDao();
+        items = transacaoDao.carregar();
     }
 
     public void adicionarTransacao(Transacao transacao) {
@@ -30,7 +27,7 @@ public class TransacaoController extends AbstractCRUD<Transacao> {
             }
         }
         create(transacao);
-        TransacaoDao.salvar(items);
+        transacaoDao.salvar(items);
         logger.info("Transação adicionada: " + transacao.getIdTransacao());
     }
 
@@ -38,7 +35,7 @@ public class TransacaoController extends AbstractCRUD<Transacao> {
         Transacao transacao = buscarTransacaoId(id);
         if (transacao != null) {
             delete(transacao);
-            TransacaoDao.salvar(items);
+            transacaoDao.salvar(items);
             logger.info("Transação removida: " + transacao.getIdTransacao());
         } else {
             logger.warn("Tentativa de remover uma transação não encontrada: " + id);
