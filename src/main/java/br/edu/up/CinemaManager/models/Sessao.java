@@ -1,4 +1,132 @@
 package br.edu.up.CinemaManager.models;
 
+import br.edu.up.CinemaManager.utils.IdUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sessao {
+    private int idSessao;
+    private Filme filme;
+    private String horario;
+    private boolean tipo3D;
+    private boolean tipoDublado;
+    private int sala;
+    private List<String> assentosDisponiveis;
+    private double preco = 20.00;
+
+    public Sessao(Filme filme, String horario, boolean tipoDublado, boolean tipo3D, int sala) {
+        this.filme = filme;
+        this.horario = horario;
+        this.tipoDublado = tipoDublado;
+        this.tipo3D = tipo3D;
+        this.idSessao = IdUtils.newIdSessao();
+        this.sala = sala;
+        this.assentosDisponiveis = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j <= 10; j++) {
+                assentosDisponiveis.add ((Character.toString((char) (i + 65)) + j));
+            }
+        }
+
+        if(this.getTipo3D()){
+            this.preco = preco * 1.5;
+        }
+    }
+
+    public Sessao(int idSessao, Filme filme, String horario, boolean tipo3D, boolean tipoDublado, int sala, List<String> assentosDisponiveis) {
+        this.idSessao = idSessao;
+        this.filme = filme;
+        this.horario = horario;
+        this.tipo3D = tipo3D;
+        this.tipoDublado = tipoDublado;
+        this.sala = sala;
+        this.assentosDisponiveis = assentosDisponiveis;
+
+        if(this.getTipo3D()){
+            this.preco = preco * 1.5;
+        }
+    }
+
+    public int getIdSessao() {
+        return idSessao;
+    }
+
+    public Filme getFilme() {
+        return filme;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public boolean getTipo3D() {
+        return tipo3D;
+    }
+
+    public boolean getTipoDublado() {
+        return tipoDublado;
+    }
+
+    public int getSala() {return sala;}
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public void setFilme(Filme filme) {
+        this.filme = filme;
+    }
+
+    public void setTipo3D(boolean tipo3D) {
+        this.tipo3D = tipo3D;
+    }
+
+    public void setTipoDublado(boolean tipoDublado) {
+        this.tipoDublado = tipoDublado;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
+
+    public boolean ocuparAssento(String assento) {
+        if (assentosDisponiveis.contains(assento)) {
+            assentosDisponiveis.remove(String.valueOf(assento));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<String> getAssentosDisponiveis() {
+        return assentosDisponiveis;
+    }
+
+    public void setAssentosDisponiveis(List<String> assentosDisponiveis) {
+        this.assentosDisponiveis = assentosDisponiveis;
+    }
+
+    @Override
+    public String toString() {
+        return "Sessao{" +
+                "idSessao=" + idSessao +
+                ", filme=" + filme +
+                ", horario='" + horario + '\'' +
+                ", tipo3D=" + tipo3D +
+                ", tipoDublado=" + tipoDublado +
+                ", sala=" + sala +
+                ", assentosDisponiveis=" + assentosDisponiveis +
+                '}';
+    }
+
 }
+
