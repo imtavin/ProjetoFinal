@@ -21,12 +21,12 @@ public class FilmeController extends AbstractCRUD<Filme> {
     }
 
     public void adicionarFilme(Filme filme) {
-      \**
+      /**
       *Método para adicionar filmes
       * @return
       * @param filmeDao
       * @param logger
-      *\  
+      */  
         for (Filme i : items) {
             if (i.getTitulo().equals(filme.getTitulo())) {
                 logger.warn("Tentativa de adicionar um filme já existente: " + filme.getTitulo());
