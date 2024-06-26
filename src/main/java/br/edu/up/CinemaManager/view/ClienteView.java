@@ -14,6 +14,13 @@ public class ClienteView {
     static Scanner scannerCliente = new Scanner(System.in);
     private static ClienteController clienteController = new ClienteController();
 
+    /**
+    * Método responsável pelas escolhas relacionadas ao uso do Modelo Cliente
+    * @param scannerCliente
+    * @param opcaoCliente
+    */
+
+    
     public static void menuCliente() {
         Integer opcaoCliente = 1;
         while (opcaoCliente != 5) {
@@ -46,6 +53,13 @@ public class ClienteView {
         }
     }
     public static void adicionarCliente(){
+            /**
+            * Método responsável por adicionar um novo cliente ao banco de dados
+            * @param nomeCliente
+            * @param cpfCliente
+            * @param idadeCliente
+            * @param scannerCliente
+            */
         System.out.println("Informe o nome do cliente:");
         String nomeCliente = scannerCliente.nextLine();
         nomeCliente = scannerCliente.nextLine();
@@ -57,12 +71,23 @@ public class ClienteView {
     }
 
     public static void removerCliente(){
+            /**
+            * Método responsável por remover um Cliente do banco de dados.
+            * @param scannerCliente
+            * @param cpfClienteRemover
+            */
         System.out.println("Informe o CPF do cliente a ser removido:");
         String cpfClienteRemover = scannerCliente.next();
         clienteController.removerCliente(cpfClienteRemover);
     }
 
     public static void pesquisarCliente(){
+            /**
+            * Método responsável por buscar um Cliente específico no banco de dados.
+            * @param scannerCliente
+            * @param cpfClientePesquisar
+            * @param cliente
+            */
         System.out.println("Informe o CPF do cliente a ser pesquisado:");
         String cpfClientePesquisar = scannerCliente.next();
         Cliente cliente = clienteController.buscarCliente(cpfClientePesquisar);
@@ -75,6 +100,10 @@ public class ClienteView {
     }
 
     public static void listarCliente(){
+            /**
+           * Método responsável por listar os Clientes no banco de dados
+           * @param listaClienteOrdenados
+           */
         List<Cliente> listaClienteOrdenados = clienteController.listarClientes();
         for (Cliente i : listaClienteOrdenados){
             System.out.println(i.toString());
